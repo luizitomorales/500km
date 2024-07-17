@@ -1,0 +1,46 @@
+import pandas as pd
+from geopy.distance import geodesic
+
+# Dataframe de cidades
+df_cidades = pd.DataFrame({
+    'cidade': ['CidadeA', 'CidadeB', 'CidadeC'],
+    'uf': ['SP', 'SP', 'MG'],
+    'latitude': [-23.5505, -23.2237, -19.9245],
+    'longitude': [-46.6333, -45.9009, -43.9352]
+})
+
+# Dataframe de aeroportos
+df_aeroportos = pd.DataFrame({
+    'aeroporto': ['Aeroporto1', 'Aeroporto2', 'Aeroporto3'],
+    'estado': ['SP', 'SP', 'MG'],
+    'latitude': [-23.4356, -22.9068, -19.8517],
+    'longitude': [-46.4731, -43.1729, -43.9501]
+})
+
+# Função para calcular a distância entre duas coordenadas
+def calcular_distancia(coord1, coord2):
+    return geodesic(coord1, coord2).kilometers
+
+# Lista para armazenar resultados
+resultados = []
+
+# Iterar sobre cada cidade
+for idx_cidade, cidade in df_cidades.iterrows():
+    # Iterar sobre cada aeroporto do mesmo estado da cidade
+    for idx_aeroporto, aeroporto in df_aeroportos[df_aeroportos['estado'] == cidade['uf']].iterrows():
+        distancia = calcular_distancia((cidade['latitude'], cidade['longitude']), (aeroporto['latitude'], aeroporto['longitude']))
+        resultados.append({
+            'cidade': cidade['cidade'],
+            'uf': cidade['uf'],
+            'latitude_cidade': cidade['latitude'],
+            'longitude_cidade': cidade['longitude'],
+            'aeroporto': aeroporto['aeroporto'],
+            'latitude_aeroporto': aeroporto['latitude'],
+            'longitude_aeroporto': aeroporto['longitude'],
+            'distancia': distancia
+        })
+
+# Criar um dataframe com os resultados
+df_resultados = pd.DataFrame(resultados)
+
+print(df_resultados)

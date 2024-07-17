@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Dinâmica de Dados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="filter-container">
+        <form method="GET" action="">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="<?php echo isset($_GET['nome']) ? $_GET['nome'] : ''; ?>">
+            
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" value="<?php echo isset($_GET['idade']) ? $_GET['idade'] : ''; ?>">
+            
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" value="<?php echo isset($_GET['cidade']) ? $_GET['cidade'] : ''; ?>">
+            
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+    <div id="table-container">
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Cidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $servername = "localhost";
+                $username = "seu_usuario";
+                $password = "sua_senha";
+                $dbname = "exemplo_db";
+
+                // Criar conexão
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Verificar conexão
+                if ($conn->connect_error) {
+                    die("Conexão falhou: " . $conn->connect_error);
+                }
+
+                // Construir consulta SQL com base nos filtros
+                $sql = "SELECT id, nome, idade, cidade FROM usuarios WHERE 1=1";
+
+                if (isset($_GET['nome']) && $_GET['nome'] != '') {
+                    $nome = $conn->real_escape_string($_GET['nome']);
+                    $sql .= " AND nome LIKE '%$nome%'";
+                }
+
+                if (isset($_GET['idade']) && $_GET['idade'] != '') {
+                    $idade = (int)$_GET['idade'];
+                    $sql .= " AND idade = $idade";
+                }
+
+                if (isset($_GET['cidade']) && $_GET['cidade'] != '') {
+                    $cidade = $conn->real_escape_string($_GET['cidade']);
+                    $sql .= " AND cidade LIKE '%$cidade%'";
+                }
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Saída dos dados de cada linha
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . $row["id"]. "</td>
+                                <td>" . $row["nome"]. "</td>
+                                <td>" . $row["idade"]. "</td>
+                                <td>" . $row["cidade"]. "</td>
+                              </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>Nenhum resultado encontrado</td></tr>";
+                }
+
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
