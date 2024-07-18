@@ -19,7 +19,7 @@
         <table id="data-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Cidade</th>
                     <th>UF da cidade</th>
                     <th>Aeroporto</th>
@@ -44,11 +44,12 @@
                 }
 
                 // Construir consulta SQL com base nos filtros
-                $sql = "SELECT `cidade`, `UF da cidade`, `Aeroporto`, `UF do Aeroporto`, `SITUADO NA AMAZÔNIA LEGAL`, `Distância (em KM) ` FROM dist_cidades_aero WHERE 1=1";
+                $sql = "SELECT `cidade`, `UF da cidade`, `Aeroporto`, `UF do Aeroporto`, `SITUADO NA AMAZÔNIA LEGAL`, `Distância (em KM)` FROM dist_cidades_aero WHERE 1=1";
 
                 if (isset($_GET['cidade']) && $_GET['cidade'] != '') {
                     $cidade = $conn->real_escape_string($_GET['cidade']);
                     $sql .= " AND cidade LIKE '%$cidade%'";
+                }
 
                 $result = $conn->query($sql);
 
