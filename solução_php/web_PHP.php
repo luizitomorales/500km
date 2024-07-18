@@ -9,14 +9,8 @@
 <body>
     <div id="filter-container">
         <form method="GET" action="">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<?php echo isset($_GET['nome']) ? $_GET['nome'] : ''; ?>">
-            
-            <label for="idade">Idade:</label>
-            <input type="number" id="idade" name="idade" value="<?php echo isset($_GET['idade']) ? $_GET['idade'] : ''; ?>">
-            
-            <label for="cidade">Cidade:</label>
-            <input type="text" id="cidade" name="cidade" value="<?php echo isset($_GET['cidade']) ? $_GET['cidade'] : ''; ?>">
+            <label for="Cidade">Cidade:</label>
+            <input type="text" id="Cidade" name="Cidade" value="<?php echo isset($_GET['cidade']) ? $_GET['cidade'] : ''; ?>">
             
             <button type="submit">Filtrar</button>
         </form>
@@ -26,17 +20,20 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
-                    <th>Idade</th>
                     <th>Cidade</th>
+                    <th>UF da cidade</th>
+                    <th>Aeroporto</th>
+                    <th>UF do Aeroporto</th>
+                    <tr>Situado na Amazônia Legal</tr>
+                    <th>Distância (em KM)</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $servername = "localhost";
-                $username = "seu_usuario";
-                $password = "sua_senha";
-                $dbname = "exemplo_db";
+                $username = "root";
+                $password = "";
+                $dbname = "500km";
 
                 // Criar conexão
                 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -47,22 +44,11 @@
                 }
 
                 // Construir consulta SQL com base nos filtros
-                $sql = "SELECT id, nome, idade, cidade FROM usuarios WHERE 1=1";
-
-                if (isset($_GET['nome']) && $_GET['nome'] != '') {
-                    $nome = $conn->real_escape_string($_GET['nome']);
-                    $sql .= " AND nome LIKE '%$nome%'";
-                }
-
-                if (isset($_GET['idade']) && $_GET['idade'] != '') {
-                    $idade = (int)$_GET['idade'];
-                    $sql .= " AND idade = $idade";
-                }
+                $sql = "SELECT cidade, UF da cidade, Aeroporto, UF do Aeroporto, SITUADO NA AMAZÔNIA LEGAL, Distância (em KM) FROM dist_cidades_aero WHERE 1=1";
 
                 if (isset($_GET['cidade']) && $_GET['cidade'] != '') {
                     $cidade = $conn->real_escape_string($_GET['cidade']);
                     $sql .= " AND cidade LIKE '%$cidade%'";
-                }
 
                 $result = $conn->query($sql);
 
@@ -70,10 +56,12 @@
                     // Saída dos dados de cada linha
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>
-                                <td>" . $row["id"]. "</td>
-                                <td>" . $row["nome"]. "</td>
-                                <td>" . $row["idade"]. "</td>
                                 <td>" . $row["cidade"]. "</td>
+                                <td>" . $row["UF da cidade"]. "</td>
+                                <td>" . $row["Aeroporto"]. "</td>
+                                <td>" . $row["UF do Aeroporto"]. "</td>
+                                <td>" . $row["SITUADO NA AMAZÔNIA LEGAL"]. "</td>
+                                <td>" . $row["Distância (em KM)"]. "</td>
                               </tr>";
                     }
                 } else {
