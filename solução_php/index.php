@@ -10,7 +10,7 @@
     <div id="filter-container">
         <form method="GET" action="">
             <label for="Cidade">Cidade:</label>
-            <input type="text" id="Cidade" name="Cidade" value="<?php echo isset($_GET['cidade']) ? $_GET['cidade'] : ''; ?>">
+            <input type="text" id="Cidade" name="cidade" value="<?php echo isset($_GET['cidade']) ? $_GET['cidade'] : ''; ?>">
             
             <button type="submit">Filtrar</button>
         </form>
@@ -24,7 +24,7 @@
                     <th>UF da cidade</th>
                     <th>Aeroporto</th>
                     <th>UF do Aeroporto</th>
-                    <tr>Situado na Amazônia Legal</tr>
+                    <th>Situado na Amazônia Legal</th>
                     <th>Distância (em KM)</th>
                 </tr>
             </thead>
@@ -44,7 +44,7 @@
                 }
 
                 // Construir consulta SQL com base nos filtros
-                $sql = "SELECT cidade, UF da cidade, Aeroporto, UF do Aeroporto, SITUADO NA AMAZÔNIA LEGAL, Distância (em KM) FROM dist_cidades_aero WHERE 1=1";
+                $sql = "SELECT `cidade`, `UF da cidade`, `Aeroporto`, `UF do Aeroporto`, `SITUADO NA AMAZÔNIA LEGAL`, `Distância (em KM) ` FROM dist_cidades_aero WHERE 1=1";
 
                 if (isset($_GET['cidade']) && $_GET['cidade'] != '') {
                     $cidade = $conn->real_escape_string($_GET['cidade']);
@@ -65,7 +65,7 @@
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='4'>Nenhum resultado encontrado</td></tr>";
+                    echo "<tr><td colspan='7'>Nenhum resultado encontrado</td></tr>";
                 }
 
                 $conn->close();
