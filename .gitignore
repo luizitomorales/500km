@@ -1,4 +1,4 @@
 # Ignore o diretório de ambiente virtual
-venv/
+500km_venv/
 # Ignore checkpoints do Jupyter Notebook
 .ipynb_checkpoints/
