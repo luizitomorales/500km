@@ -1,0 +1,4 @@
+# Ignore o diretório de ambiente virtual
+venv/
+# Ignore checkpoints do Jupyter Notebook
+.ipynb_checkpoints/
