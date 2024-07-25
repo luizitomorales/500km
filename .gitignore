@@ -2,3 +2,5 @@
 500km_venv/
 # Ignore checkpoints do Jupyter Notebook
 .ipynb_checkpoints/
+# Ignore a lixeira do diretório
+[lixeira]

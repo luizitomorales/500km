@@ -1,0 +1,2 @@
+1 - municipios {https://github.com/kelvins/municipios-brasileiros/blob/main/csv/municipios.csv}
+2 - latitude-longitude-cidades {https://github.com/alanwillms/geoinfo/blob/master/latitude-longitude-cidades.csv}
